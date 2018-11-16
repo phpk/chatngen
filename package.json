@@ -11,6 +11,7 @@
     "deploy": "ipfs add -r dist"
   },
   "dependencies": {
+    "ipfs": "^0.33.1",
     "vue": "latest",
     "vue-router": "latest",
     "vuetify": "latest",

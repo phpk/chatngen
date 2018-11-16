@@ -1,4 +1,4 @@
-# vue-digital-asset-template
+# chatNGEN
 
 ## Project setup
 ```
