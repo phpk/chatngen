@@ -5,5 +5,8 @@ import ChatNgen from '@/pages/ChatNgen'
 Vue.use(Router)
 
 export default new Router({
-  routes: [{ path: '/:room', name: 'chatngen', component: ChatNgen }]
+  routes: [
+    { path: '/', name: 'chatngen', component: ChatNgen },
+    { path: '/:room', name: 'chatngen', component: ChatNgen }
+  ]
 })
