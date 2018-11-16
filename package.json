@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "ipfs": "^0.33.1",
+    "timeago.js": "^4.0.0-beta.1",
     "vue": "latest",
     "vue-router": "latest",
     "vuetify": "latest",
