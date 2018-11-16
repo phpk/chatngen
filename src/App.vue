@@ -1,15 +1,22 @@
 <template>
   <v-app>
     <titlebar>
-      <div class="headline text-uppercase" slot="left">
+      <div class="titleLeft headline text-uppercase" slot="left">
         <span>chat</span>
         <span class="font-weight-light">NGEN</span>
       </div>
-      <div slot="right">
-        <v-btn flat>Oh snap</v-btn>
+      <div class="titleRight" slot="right">
+        <v-flex v-if="$vuetify.breakpoint.smAndUp" class="peerId">
+          <v-text-field
+            placeholder="Nickname"
+            v-model="identity.nickname"
+            solo
+            flat
+            hide-details
+          />
+        </v-flex>
       </div>
     </titlebar>
-
     <v-content>
       <router-view />
     </v-content>
@@ -17,6 +24,8 @@
 </template>
 
 <script>
+import ipfsConfig from '@/config/ipfs'
+import { startIpfs } from '@/utils/ipfs'
 import Titlebar from '@/components/Titlebar'
 
 export default {
@@ -26,26 +35,27 @@ export default {
   data() {
     return {
       ipfs: {
-        node: null,
-        config: {
-          config: {
-            Addresses: {
-              Swarm: [
-                '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star'
-              ]
-            }
-          },
-          EXPERIMENTAL: {
-            pubsub: true
-          }
-        }
+        node: null
+      },
+      identity: {
+        peerId: null,
+        nickname: null
       }
     }
   },
   mounted: async function() {
-    this.ipfs.node = new window.Ipfs(this.ipfs.config)
-    const id = await this.ipfs.id()
-    console.log(id)
+    const { node, identity } = await startIpfs(ipfsConfig)
+    this.node = node
+    this.identity.peerId = identity.id
+
+
   }
 }
 </script>
+
+<style scoped>
+.titleRight >>> .peerId {
+  font-family: monospace
+}
+</style>
+
