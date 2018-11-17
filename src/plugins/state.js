@@ -18,12 +18,16 @@ const mutations = {
 }
 
 const store = new Vuex.Store({
-  state: {},
+  state: {
+    id: {
+      nickname: null
+    }
+  },
   mutations,
   plugins: [
     createPersistedState({
-      key: 'vim-network-digital-asset-template',
-      paths: []
+      key: 'vim-network-chatngen',
+      paths: ['id']
     })
   ]
 })

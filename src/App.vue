@@ -23,7 +23,8 @@
         <v-flex class="peerId">
           <v-text-field
             placeholder="Enter Nickname"
-            v-model="identity.nickname"
+            @change="$store.commit('merge', { id: { nickname: arguments[0] } })"
+            :value="$store.state.id.nickname"
             class="transparent"
             color="white"
             prepend-icon="alternate_email"
@@ -65,8 +66,7 @@ export default {
       room: null,
       currentRoom: null,
       identity: {
-        peerId: null,
-        nickname: null
+        peerId: null
       }
     }
   },
@@ -90,7 +90,12 @@ export default {
     publish(msg) {
       this.node.pubsub.publish(
         `chatngen-${this.room}`,
-        Buffer.from(JSON.stringify({ nickname: this.identity.nickname, msg })),
+        Buffer.from(
+          JSON.stringify({
+            nickname: this.$store.state.id.nickname,
+            msg
+          })
+        ),
         err => {
           if (err) console.error(err)
         }
