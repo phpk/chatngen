@@ -17,10 +17,11 @@
                   <span class="caption">&nbsp;({{ timeAgo(msg.ts) }})</span>
                 </div>
                 <div>{{ msg.msg }}</div>
-                <v-divider />
+                <v-divider v-if="idx < messages.length" />
               </div>
             </v-layout>
-            <div class="white">
+            <v-divider />
+            <div>
               <v-layout>
                 <v-text-field
                   placeholder="Message"
@@ -40,7 +41,10 @@
       </v-tab-item>
       <v-tab-item>
         <v-card flat>
-          <v-list>
+          <v-list class="pt-0">
+            <v-list-tile class="mt-0 grey darken-1 white--text">
+              <span class="font-weight-bold">#{{$route.params.room}}</span>
+            </v-list-tile>
             <template v-for="(peer, idx) in peers">
               <v-list-tile :key="`peer-${ idx }`">
                 <span class="font-weight-bold">{{ peer.nickname }}</span>
@@ -78,11 +82,20 @@ export default {
     timeAgo(ts) {
       return timeago().format(ts)
     },
-    registerPeer(peerId) {
-      const peerExists = this.peers
-        .filter(peer => peer.peerId === peerId).length
-
-      if (!peerExists) this.peers.push(peerId)
+    registerPeer(peerObj) {
+      const peerExists = this.peers.filter(
+        peer => peer.peerId === peerObj.peerId
+      ).length
+      if (!peerExists) this.peers.push(peerObj)
+    },
+    updatePeer(peerId) {
+      for (let i = 0; i < this.peers.length; i++) {
+        if (this.peers[i].peerId === peerId) this.peers[i].ts = Date.now()
+      }
+    },
+    clearInactivePeers() {
+      const expire = Date.now() - 30 * 1000
+      this.peers = this.peers.filter(peer => peer.ts <= expire)
     }
   },
   mounted() {
@@ -91,7 +104,8 @@ export default {
 
       try {
         const { peerId, nickname, msg } = JSON.parse(data)
-        this.registerPeer({ peerId, nickname })
+        this.registerPeer({ peerId, nickname, ts })
+        this.updatePeer(peerId)
         if (msg) this.messages.push({ ts, peerId, nickname, msg })
       } catch (err) {
         console.error(err)
@@ -100,7 +114,10 @@ export default {
       this.lastUpdate = ts
     })
 
-    window.setInterval(() => { this.lastUpdate = Date.now() }, 60 * 1000)
+    window.setInterval(() => {
+      this.lastUpdate = Date.now()
+      this.clearInactivePeers()
+    }, 15 * 1000)
   }
 }
 </script>
@@ -113,7 +130,7 @@ export default {
 .chatNgen >>> .v-card {
   display: flex;
   flex-direction: column;
-  flex-grow: 1
+  flex-grow: 1;
 }
 .chatNgen >>> .v-window {
   height: 100%;

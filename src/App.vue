@@ -1,13 +1,19 @@
 <template>
   <v-app>
-    <titlebar>
+    <titlebar v-if="$route.params.room">
       <div class="titleLeft headline text-uppercase" slot="left">
         <v-flex v-if="$vuetify.breakpoint.smAndUp">
-          <span>chat</span>
-          <span class="font-weight-light">NGEN</span>
+          <router-link to="/">
+            <span>chat</span>
+            <span class="font-weight-light">NGEN</span>
+          </router-link>
         </v-flex>
         <v-flex v-else>
-          cNGN
+          <v-img
+            src="/favicon.svg"
+            width="32"
+            height="32"
+          />
         </v-flex>
       </div>
       <div class="titleRight" slot="right">
@@ -34,7 +40,6 @@ import ipfsConfig from '@/config/ipfs'
 import { startIpfs } from '@/utils/ipfs'
 import Titlebar from '@/components/Titlebar'
 import { EventBus } from '@/plugins/events'
-import crypto from 'crypto'
 
 export default {
   components: {
@@ -74,10 +79,7 @@ export default {
     }
   },
   mounted: async function() {
-    this.room = crypto
-      .createHash('sha256')
-      .update(`chatngen-${this.$route.params.room}`)
-      .digest('hex')
+    this.room = this.$route.params.room
 
     const { node, identity } = await startIpfs(ipfsConfig)
     this.node = node
@@ -89,13 +91,19 @@ export default {
 
     EventBus.$on('send', msg => this.publish(msg))
 
-    window.setInterval(() => this.heartBeat , 10 * 1000)
+    window.setInterval(() => this.heartBeat, 10 * 1000)
   }
 }
 </script>
 
 <style>
-.mono { font-family: 'monospace'; }
+a {
+  color: inherit !important;
+  text-decoration: none;
+}
+.mono {
+  font-family: 'monospace';
+}
 </style>
 
 <style scoped>
