@@ -1,15 +1,17 @@
 <template>
   <v-layout style="background:#ff4800" justify-center align-center fill-height>
     <div>
-      <v-layout column>
+      <v-layout column align-center>
         <v-img
           src="/logo.svg"
-          width="600"
-          height="110"
+          width="350"
+          height="64"
         />
-        <v-layout class="mt-3" >
+        <v-img class="mt-4" width="350" height="260" src="/dudes.svg" />
+        <v-layout style="width:100%" class="mt-2">
           <v-text-field
             @keyup.enter.native="joinRoom"
+            color="white"
             label="What Room?"
             v-model="room"
             dark
