@@ -4,7 +4,7 @@
 Download the Firefox or Chrome browser extension then snap the QR Code to enter a room.
 
 ## Available on IPFS! \o/
-<a href="https://gateway.ipfs.io/ipfs/QmdyeDEjvWQDSKFi4DG9PgcDdcRFnM35FCcsA7VeACWkvv">https://gateway.ipfs.io/ipfs/QmdyeDEjvWQDSKFi4DG9PgcDdcRFnM35FCcsA7VeACWkvv</a>
+<a href="https://gateway.ipfs.io/ipfs/QmWbty6rp82K2STi8hFAirupR43NdGqp4gdLU4HU2XJzBu">https://gateway.ipfs.io/ipfs/QmWbty6rp82K2STi8hFAirupR43NdGqp4gdLU4HU2XJzBu</a>
 
 <p align="center">
   <img width="720" src="https://user-images.githubusercontent.com/25379378/48656680-1a1db980-e9dd-11e8-8efa-dbe0aa258672.png" alt="chatNGEN" />
