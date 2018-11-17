@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     joinRoom() {
-      const formattedRoom = this.room
+      const formattedRoom = this.room || 'lobby'
         .replace(/^https?:\/\//, '')
         .replace(/[\W_]+/g, ' ')
         .replace(/ /g, '-')
