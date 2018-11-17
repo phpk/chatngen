@@ -81,8 +81,8 @@ export default {
       }
     },
     changeRoom(room) {
-      if (this.currentRoom) this.node.pubsub.unsubscribe(this.currentRoom)
-      this.node.pubsub.subscribe(room, data => {
+      if (this.currentRoom) this.node.pubsub.unsubscribe(`chatngen-${this.currentRoom}`)
+      this.node.pubsub.subscribe(`chatngen-${room}`, data => {
         this.incoming(data)
       })
       this.currentRoom = room
