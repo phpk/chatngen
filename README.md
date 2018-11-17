@@ -1,26 +1,4 @@
 # chatNGEN
 
-## Project setup
-```
-yarn
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Deploy to IPFS
-```
-yarn deploy
-```
+## Decentralized P2P Chat
+Download the Firefox or Chrome browser extension then snap the QR Code to enter a chatroom.
