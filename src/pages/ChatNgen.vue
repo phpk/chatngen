@@ -1,23 +1,32 @@
 <template>
   <v-layout class="chatNgen grey lighten-2" fill-height column>
-    <v-tabs class="tabs grey darken-1" dark>
+    <v-tabs class="tabs grey darken-1" slider-color="#ea4200" dark>
       <v-tab>Chat</v-tab>
-      <v-tab>Peers ({{ peers.length }})</v-tab>
+      <v-tab>Peers ({{ peers.length || 1  }})</v-tab>
       <v-tab-item>
         <v-card flat>
           <v-layout fill-height column>
-            <v-layout class="chatBox" column>
+            <v-layout ref="chatBox" class="chatBox" column>
               <v-spacer />
               <div v-for="(msg, idx) in messages" :key="`msg-${idx}-${lastUpdate}`">
-                <div>
-                  <span class="font-weight-bold" v-if="msg.nickname">
-                    {{ msg.nickname }}
-                  </span>
-                  <span class="mono">{{ msg.peerId }}</span>
-                  <span class="caption">&nbsp;({{ timeAgo(msg.ts) }})</span>
+                <v-divider />
+                <div class="pa-2">
+                  <v-layout column>
+                    <v-layout wrap>
+                      <div class="font-weight-bold">
+                        @{{ msg.nickname || 'Guest' }}
+                      </div>
+                      <v-spacer />
+                      <v-layout justify-end class="caption" style="font-size:0.75em">
+                        {{ timeAgo(msg.ts) }}
+                      </v-layout>
+                    </v-layout>
+                    <div class="mono" style="font-size:0.75em">
+                      {{ msg.peerId }}
+                    </div>
+                  </v-layout>
+                  <div>{{ msg.msg }}</div>
                 </div>
-                <div>{{ msg.msg }}</div>
-                <v-divider v-if="idx < messages.length" />
               </div>
             </v-layout>
             <v-divider />
@@ -27,6 +36,7 @@
                   placeholder="Message"
                   v-model="msg"
                   @keyup.enter.native="send"
+                  ref="messageInput"
                   solo
                   flat
                   hide-details
@@ -99,6 +109,7 @@ export default {
     }
   },
   mounted() {
+    this.$refs.messageInput.focus()
     EventBus.$on('incoming', data => {
       const ts = Date.now()
 
@@ -106,7 +117,13 @@ export default {
         const { peerId, nickname, msg } = JSON.parse(data)
         this.registerPeer({ peerId, nickname, ts })
         this.updatePeer(peerId)
-        if (msg) this.messages.push({ ts, peerId, nickname, msg })
+        if (msg) {
+          this.messages.push({ ts, peerId, nickname, msg })
+          this.$nextTick(() => {
+            const chatBox = this.$refs.chatBox
+            chatBox.scrollTop = chatBox.scrollHeight
+          })
+        }
       } catch (err) {
         console.error(err)
       }
@@ -118,6 +135,12 @@ export default {
       this.lastUpdate = Date.now()
       this.clearInactivePeers()
     }, 15 * 1000)
+  },
+  watch: {
+    '$route.params.room': function(room) {
+      this.messages = []
+      this.peers = []
+    }
   }
 }
 </script>
@@ -136,6 +159,7 @@ export default {
   height: 100%;
 }
 .chatNgen >>> .chatBox {
+  height: calc(100vh - 145px);
   overflow-y: scroll;
 }
 </style>

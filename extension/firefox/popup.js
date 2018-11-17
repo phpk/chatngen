@@ -1,6 +1,6 @@
 'use strict'
 /* eslint-disable no-new */
-/* global browser */
+/* global browser, QRCode */
 
 browser.tabs.query({ currentWindow: true, active: true }).then(res => {
   const [tab] = res
@@ -10,13 +10,14 @@ browser.tabs.query({ currentWindow: true, active: true }).then(res => {
     .replace(/[\W_]+/g, ' ')
     .replace(/ /g, '-')
     .replace(/-$/, '')
+    .toLowerCase()
 
   const chatNgenLink = `https://chatngen.com/#/${formattedUrl}`
 
   window.addEventListener('load', () => {
     document.getElementById('qrLink').href = chatNgenLink
 
-    new window.QRCode('qrcode', {
+    new QRCode('qrcode', {
       text: chatNgenLink,
       width: 296,
       height: 296,

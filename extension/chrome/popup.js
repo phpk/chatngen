@@ -1,7 +1,7 @@
 'use strict'
 
 /* eslint-disable no-new */
-/* global chrome */
+/* global chrome, QRCode */
 
 document.addEventListener('DOMContentLoaded', () => {
   chrome.tabs.getSelected(null, tab => {
@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/[\W_]+/g, ' ')
       .replace(/ /g, '-')
       .replace(/-$/, '')
+      .toLowerCase()
 
     const chatNgenLink = `https://chatngen.com/#/${formattedUrl}`
 
     document.getElementById('qrLink').href = chatNgenLink
 
-    new window.QRCode('qrcode', {
+    new QRCode('qrcode', {
       text: chatNgenLink,
       width: 296,
       height: 296,

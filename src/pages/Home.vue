@@ -2,17 +2,23 @@
   <v-layout style="background:#ff4800" justify-center align-center fill-height>
     <div>
       <v-layout column align-center>
-        <v-img
-          src="/logo.svg"
-          width="350"
-          height="64"
-        />
-        <v-img class="mt-4" width="350" height="260" src="/dudes.svg" />
+        <router-link to="/lobby">
+          <v-img
+            src="/logo.svg"
+            width="350"
+            height="64"
+          />
+        </router-link>
+        <router-link to="/lobby">
+          <v-img class="mt-4" width="350" height="260" src="/dudes.svg" />
+        </router-link>
         <v-layout style="width:100%" class="mt-2">
           <v-text-field
             @keyup.enter.native="joinRoom"
+            ref="roomInput"
             color="white"
-            label="What Room?"
+            label="Which room do you want to enter?"
+            placeholder="Lobby"
             v-model="room"
             dark
             hide-details
@@ -35,19 +41,18 @@ export default {
   },
   methods: {
     joinRoom() {
-      this.$router.push(this.room)
+      const formattedRoom = this.room
+        .replace(/^https?:\/\//, '')
+        .replace(/[\W_]+/g, ' ')
+        .replace(/ /g, '-')
+        .replace(/-$/, '')
+        .toLowerCase()
+      this.$router.push(formattedRoom)
       this.room = null
     }
   },
   mounted() {
-    new window.QRCode(document.getElementById('qrcode'), {
-      text: 'test',
-      width: 128,
-      height: 128,
-      colorDark: '#fff',
-      colorLight: 'transparent',
-      correctLevel: window.QRCode.CorrectLevel.H
-    })
+    this.$refs.roomInput.focus()
   }
 }
 </script>
