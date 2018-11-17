@@ -1,6 +1,6 @@
 {
   "name": "chatngen",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "author": "rtbz <ryanbell@gmail.com>",
   "license": "MIT",
@@ -11,8 +11,8 @@
     "deploy": "ipfs add -r dist"
   },
   "dependencies": {
-    "ipfs": "^0.33.1",
-    "timeago.js": "^4.0.0-beta.1",
+    "ipfs": "latest",
+    "timeago.js": "latest",
     "vue": "latest",
     "vue-router": "latest",
     "vuetify": "latest",
