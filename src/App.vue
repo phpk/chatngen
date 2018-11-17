@@ -96,7 +96,7 @@ export default {
 
     EventBus.$on('send', msg => this.publish(msg))
 
-    window.setInterval(() => this.heartBeat, 10 * 1000)
+    window.setInterval(() => this.heartBeat(), 10 * 1000)
   }
 }
 </script>
