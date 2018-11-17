@@ -31,7 +31,7 @@
     </titlebar>
     <titlebar color="#ea4200" v-else>
       <div slot="right">
-        <v-btn class="transparent" flat dark>Download Extension</v-btn>
+        <v-btn href="https://github.com/rtbz/chatngen/raw/master/extension/browser-extensions.zip" class="downloadLink transparent text--white" flat dark>Download Extension</v-btn>
       </div>
     </titlebar>
     <v-content>
@@ -109,6 +109,7 @@ a {
 .mono {
   font-family: 'monospace';
 }
+.downloadLink > .v-btn__content { color: white !important }
 </style>
 
 <style scoped>
