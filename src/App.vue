@@ -29,6 +29,11 @@
         </v-flex>
       </div>
     </titlebar>
+    <titlebar color="#ea4200" v-else>
+      <div slot="right">
+        <v-btn class="transparent" flat dark>Download Extension</v-btn>
+      </div>
+    </titlebar>
     <v-content>
       <router-view />
     </v-content>

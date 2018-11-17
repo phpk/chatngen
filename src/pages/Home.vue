@@ -7,7 +7,7 @@
           width="600"
           height="110"
         />
-        <v-layout justify-baseline>
+        <v-layout class="mt-3" >
           <v-text-field
             @keyup.enter.native="joinRoom"
             label="What Room?"
@@ -36,7 +36,16 @@ export default {
       this.$router.push(this.room)
       this.room = null
     }
+  },
+  mounted() {
+    new window.QRCode(document.getElementById('qrcode'), {
+      text: 'test',
+      width: 128,
+      height: 128,
+      colorDark: '#fff',
+      colorLight: 'transparent',
+      correctLevel: window.QRCode.CorrectLevel.H
+    })
   }
 }
 </script>
-

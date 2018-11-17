@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dense flat app>
+  <v-toolbar :color="color" dense flat app>
     <v-toolbar-title>
       <slot name="left" />
     </v-toolbar-title>
@@ -9,7 +9,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['color']
+}
 </script>
 
 <style>
