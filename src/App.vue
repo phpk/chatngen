@@ -5,7 +5,7 @@
         <v-flex v-if="$vuetify.breakpoint.smAndUp">
           <router-link to="/">
             <v-img
-              src="/logo.svg"
+              src="logo.svg"
               width="176"
               height="32"
             />
@@ -13,7 +13,7 @@
         </v-flex>
         <v-flex v-else>
           <v-img
-            src="/favicon-white.svg"
+            src="favicon-white.svg"
             width="32"
             height="32"
           />

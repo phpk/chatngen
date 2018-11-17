@@ -4,13 +4,13 @@
       <v-layout column align-center>
         <router-link to="/lobby">
           <v-img
-            src="/logo.svg"
+            src="logo.svg"
             width="350"
             height="64"
           />
         </router-link>
         <router-link to="/lobby">
-          <v-img class="mt-4" width="350" height="260" src="/dudes.svg" />
+          <v-img class="mt-4" width="350" height="260" src="dudes.svg" />
         </router-link>
         <v-layout style="width:100%" class="mt-2">
           <v-text-field
