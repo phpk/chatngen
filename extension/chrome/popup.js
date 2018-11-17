@@ -1,20 +1,20 @@
 'use strict'
-
 /* eslint-disable no-new */
 /* global chrome, QRCode */
 
-document.addEventListener('DOMContentLoaded', () => {
-  chrome.tabs.getSelected(null, tab => {
-    const { url } = tab
-    const formattedUrl = url
-      .replace(/^https?:\/\//, '')
-      .replace(/[\W_]+/g, ' ')
-      .replace(/ /g, '-')
-      .replace(/-$/, '')
-      .toLowerCase()
+chrome.tabs.getSelected(null, tab => {
+  const { url } = tab
+  const formattedUrl = url
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .replace(/[\W_]+/g, ' ')
+    .replace(/ /g, '-')
+    .replace(/-$/, '')
+    .toLowerCase()
 
-    const chatNgenLink = `https://chatngen.com/#/${formattedUrl}`
+  const chatNgenLink = `https://chatngen.com/#/${formattedUrl}`
 
+  const genQr = () => {
     document.getElementById('qrLink').href = chatNgenLink
 
     new QRCode('qrcode', {
@@ -25,5 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
       colorLight: '#ffffff',
       correctLevel: QRCode.CorrectLevel.L
     })
-  })
+  }
+
+  const loadQr = () => {
+    genQr()
+    window.removeEventListener('load', loadQr, false)
+  }
+
+  document.readyState === 'complete'
+    ? genQr()
+    : window.addEventListener('load', loadQr)
 })

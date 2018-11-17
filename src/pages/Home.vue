@@ -149,6 +149,7 @@ export default {
     formatRoom(room) {
       return (room || 'lobby')
         .replace(/^https?:\/\//, '')
+        .replace(/^www\./, '')
         .replace(/[\W_]+/g, ' ')
         .replace(/ /g, '-')
         .replace(/-$/, '')

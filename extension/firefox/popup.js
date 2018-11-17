@@ -7,6 +7,7 @@ browser.tabs.query({ currentWindow: true, active: true }).then(res => {
   const { url } = tab
   const formattedUrl = url
     .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
     .replace(/[\W_]+/g, ' ')
     .replace(/ /g, '-')
     .replace(/-$/, '')
@@ -14,7 +15,7 @@ browser.tabs.query({ currentWindow: true, active: true }).then(res => {
 
   const chatNgenLink = `https://chatngen.com/#/${formattedUrl}`
 
-  window.addEventListener('load', () => {
+  const genQr = () => {
     document.getElementById('qrLink').href = chatNgenLink
 
     new QRCode('qrcode', {
@@ -25,5 +26,14 @@ browser.tabs.query({ currentWindow: true, active: true }).then(res => {
       colorLight: '#ffffff',
       correctLevel: QRCode.CorrectLevel.L
     })
-  })
+  }
+
+  const loadQr = () => {
+    genQr()
+    window.removeEventListener('load', loadQr, false)
+  }
+
+  document.readyState === 'complete'
+    ? genQr()
+    : window.addEventListener('load', loadQr)
 })
