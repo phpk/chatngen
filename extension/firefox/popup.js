@@ -6,6 +6,7 @@ browser.tabs.query({ currentWindow: true, active: true }).then(res => {
   const [tab] = res
   const { url } = tab
   const formattedUrl = url
+    .replace(/^https?:\/\//, '')
     .replace(/[\W_]+/g, ' ')
     .replace(/ /g, '-')
     .replace(/-$/, '')

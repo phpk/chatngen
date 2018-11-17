@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.tabs.getSelected(null, tab => {
     const { url } = tab
     const formattedUrl = url
+      .replace(/^https?:\/\//, '')
       .replace(/[\W_]+/g, ' ')
       .replace(/ /g, '-')
       .replace(/-$/, '')
