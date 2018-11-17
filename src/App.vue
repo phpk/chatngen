@@ -6,7 +6,7 @@
           <router-link to="/">
             <v-img
               src="logo.svg"
-              width="176"
+              width="174"
               height="32"
             />
           </router-link>
