@@ -1,27 +1,27 @@
 'use strict'
 
+/* eslint-disable no-new */
+/* global chrome */
+
 document.addEventListener('DOMContentLoaded', () => {
-  chrome.tabs.getSelected(null, tab =>{
+  chrome.tabs.getSelected(null, tab => {
     const { url } = tab
-    const urlHash = sjcl.codec.hex.fromBits(
-      sjcl.hash.sha256.hash(
-        url.replace(/(^\w+:|^)\/\//, '')
-          .replace(/\/$/, '')
-      )
-    )
-    
-    const chatNgenLink = `http://192.168.0.200:8081/${urlHash}`
+    const formattedUrl = url
+      .replace(/[\W_]+/g, ' ')
+      .replace(/ /g, '-')
+      .replace(/-$/, '')
+
+    const chatNgenLink = `https://chatngen.com/#/${formattedUrl}`
 
     document.getElementById('qrLink').href = chatNgenLink
 
-    new QRCode('qrcode', {
+    new window.QRCode('qrcode', {
       text: chatNgenLink,
       width: 296,
       height: 296,
-      colorDark : "#000000",
-      colorLight : "#ffffff",
-      correctLevel : QRCode.CorrectLevel.L
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.L
     })
   })
 })
-

@@ -95,7 +95,7 @@ export default {
     },
     clearInactivePeers() {
       const expire = Date.now() - 30 * 1000
-      this.peers = this.peers.filter(peer => peer.ts <= expire)
+      this.peers = this.peers.filter(peer => peer.ts >= expire)
     }
   },
   mounted() {
