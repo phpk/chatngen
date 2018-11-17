@@ -89,7 +89,7 @@ export default {
     },
     publish(msg) {
       this.node.pubsub.publish(
-        this.room,
+        `chatngen-${this.room}`,
         Buffer.from(JSON.stringify({ nickname: this.identity.nickname, msg })),
         err => {
           if (err) console.error(err)
