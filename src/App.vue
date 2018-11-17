@@ -59,6 +59,18 @@ export default {
       } catch (err) {
         console.error(err)
       }
+    },
+    publish(msg) {
+      this.node.pubsub.publish(
+        this.room,
+        Buffer.from(JSON.stringify({ nickname: this.identity.nickname, msg })),
+        err => {
+          if (err) console.error(err)
+        }
+      )
+    },
+    heartBeat() {
+      this.publish(null)
     }
   },
   mounted: async function() {
@@ -75,18 +87,16 @@ export default {
       this.incoming(data)
     })
 
-    EventBus.$on('send', msg => {
-      this.node.pubsub.publish(
-        this.room,
-        Buffer.from(JSON.stringify({ nickname: this.identity.nickname, msg })),
-        err => {
-          if (err) console.error(err)
-        }
-      )
-    })
+    EventBus.$on('send', msg => this.publish(msg))
+
+    window.setInterval(() => this.heartBeat , 10 * 1000)
   }
 }
 </script>
+
+<style>
+.mono { font-family: 'monospace'; }
+</style>
 
 <style scoped>
 .titleRight >>> .peerId {
