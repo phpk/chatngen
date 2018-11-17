@@ -65,6 +65,8 @@ export default {
       node: null,
       room: null,
       currentRoom: null,
+      newMessages: 0,
+      isActive: true,
       identity: {
         peerId: null
       }
@@ -76,12 +78,18 @@ export default {
       try {
         const { nickname, msg } = JSON.parse(dataBuffer.toString())
         EventBus.$emit('incoming', JSON.stringify({ peerId, nickname, msg }))
+
+        if (msg && !this.isActive) this.newMessages += 1
+
+        if (this.newMessages)
+          document.title = `chatNGEN: ${this.newMessages} New`
       } catch (err) {
         console.error(err)
       }
     },
     changeRoom(room) {
-      if (this.currentRoom) this.node.pubsub.unsubscribe(`chatngen-${this.currentRoom}`)
+      if (this.currentRoom)
+        this.node.pubsub.unsubscribe(`chatngen-${this.currentRoom}`)
       this.node.pubsub.subscribe(`chatngen-${room}`, data => {
         this.incoming(data)
       })
@@ -117,6 +125,15 @@ export default {
     this.changeRoom(this.room)
 
     window.setInterval(() => this.heartBeat(), 10 * 1000)
+    window.addEventListener('focus', () => {
+      this.isActive = true
+      this.newMessages = 0
+
+      document.title = 'chatNGEN'
+    })
+    window.addEventListener('blur', () => {
+      this.isActive = false
+    })
   },
   watch: {
     '$route.params.room': function(room) {

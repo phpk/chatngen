@@ -184,10 +184,11 @@ export default {
 .chatNgen >>> .roomLabel {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;width: 100%;
+  text-overflow: ellipsis;
+  width: 100%;
   text-align: right;
 }
 .chatNgen >>> .v-tabs__container {
-  max-width: 100vw
+  max-width: 100vw;
 }
 </style>
