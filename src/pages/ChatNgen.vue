@@ -1,8 +1,25 @@
 <template>
   <v-layout class="chatNgen grey lighten-2" fill-height column>
-    <v-tabs class="tabs grey darken-1" slider-color="#ea4200" dark>
-      <v-tab>Chat</v-tab>
-      <v-tab>Peers ({{ peers.length || 1  }})</v-tab>
+    <v-tabs
+      v-model="tab"
+      class="tabs grey darken-1"
+      slider-color="#ea4200"
+      dark
+    >
+      <v-tab><v-icon>chat</v-icon></v-tab>
+      <v-tab><v-icon>people</v-icon></v-tab>
+      <v-layout
+        style="height:48px"
+        class="font-weight-bold white--text ml-2 mr-2"
+        justify-center
+        align-end
+        column
+      >
+        <div class="caption ml-2 mr-2 roomLabel" v-if="tab === 0">#{{$route.params.room}}</div>
+        <div class="caption ml-2 mr-2" v-else>
+          {{ peers.length || 1 }} Peer{{ peers.length > 1 ? 's' : '' }}
+        </div>
+      </v-layout>
       <v-tab-item>
         <v-card flat>
           <v-layout fill-height column>
@@ -52,13 +69,14 @@
       <v-tab-item>
         <v-card flat>
           <v-list class="pt-0">
-            <v-list-tile class="mt-0 grey darken-1 white--text">
-              <span class="font-weight-bold">#{{$route.params.room}}</span>
-            </v-list-tile>
             <template v-for="(peer, idx) in peers">
               <v-list-tile :key="`peer-${ idx }`">
-                <span class="font-weight-bold">{{ peer.nickname }}</span>
-                <span>&nbsp;({{ peer.peerId }})</span>
+                <v-layout column>
+                <div class="font-weight-bold">
+                  @{{ peer.nickname || 'Guest' }}
+                </div>
+                <div class="caption" style="font-size:0.75em">{{ peer.peerId }}</div>
+                </v-layout>
               </v-list-tile>
               <v-divider :key="`div-${ idx }`" />
             </template>
@@ -78,6 +96,7 @@ export default {
   components: {},
   data() {
     return {
+      tab: 0,
       msg: null,
       messages: [],
       peers: [],
@@ -161,5 +180,14 @@ export default {
 .chatNgen >>> .chatBox {
   height: calc(100vh - 145px);
   overflow-y: scroll;
+}
+.chatNgen >>> .roomLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;width: 100%;
+  text-align: right;
+}
+.chatNgen >>> .v-tabs__container {
+  max-width: 100vw
 }
 </style>

@@ -111,7 +111,7 @@ export default {
 
     this.changeRoom(this.room)
 
-    window.setInterval(() => this.heartBeat, 10 * 1000)
+    window.setInterval(() => this.heartBeat(), 10 * 1000)
   },
   watch: {
     '$route.params.room': function(room) {
