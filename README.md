@@ -1,7 +1,12 @@
 # chatNGEN
 
 ## Decentralized P2P Chat
-Download the Firefox or Chrome browser extension then snap the QR Code to enter a room.
+<a href="https://chatngen.com">https://chatngen.com</a>
+
+Download the browser extension then snap a QR Code to enter a room.
+
+Get the firefox addon:
+<a href="https://addons.mozilla.org/en-US/firefox/addon/chatngen/">https://addons.mozilla.org/en-US/firefox/addon/chatngen/</a>
 
 ## Available on IPFS! \o/
 <a href="https://gateway.ipfs.io/ipfs/QmdsRr5JgPRrEhgX8GJvXJAyB4maQAENVqaxBQEnkoQiNt">https://gateway.ipfs.io/ipfs/QmdsRr5JgPRrEhgX8GJvXJAyB4maQAENVqaxBQEnkoQiNt</a>
